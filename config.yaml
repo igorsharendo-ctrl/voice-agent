@@ -1,0 +1,34 @@
+# Whisper ASR (relative to this folder — OK to move voice-ia anywhere)
+model: models/faster-whisper-large-v3-turbo
+device: cuda
+compute_type: float16
+language: ru
+
+# UI: START → speak → STOP → clipboard (Ctrl+V yourself)
+# Device is chosen on the overlay; remembered in outbox/prefs.json
+
+sample_rate: 16000
+channels: 1
+block_duration_ms: 30
+min_speech_ms: 250
+max_utterance_s: 60
+# Peak RMS below this = silence → do not touch clipboard
+energy_threshold: 0.0025
+
+# Optional: strip habitual «ИА» / «прием»
+wake_phrases:
+  - "иа"
+  - "и а"
+  - "ia"
+  - "йа"
+  - "ия"
+  - "слушай"
+  - "иа слушай"
+end_tokens:
+  - "прием"
+  - "приём"
+  - "прем"
+
+beep_on_command: true
+overlay_enabled: true
+outbox_path: outbox/commands.jsonl
